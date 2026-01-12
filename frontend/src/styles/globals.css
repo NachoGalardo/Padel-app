@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-surface-950 text-surface-200 font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  * {
+    @apply border-surface-700;
+  }
+
+  *, *::before, *::after {
+    @apply transition-colors duration-200;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold text-surface-50;
+  }
+
+  h1 { @apply text-4xl lg:text-5xl; }
+  h2 { @apply text-3xl lg:text-4xl; }
+  h3 { @apply text-2xl lg:text-3xl; }
+  h4 { @apply text-xl lg:text-2xl; }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-700 rounded-md border-2 border-surface-900;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-600;
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-surface-950;
+  }
+}
+
+@layer components {
+  /* Main container */
+  .main-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Button variants */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 
+           px-4 py-2 rounded-lg font-medium
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transform hover:-translate-y-0.5
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 text-white
+           shadow-lg shadow-primary-600/20 hover:shadow-primary-600/30
+           hover:bg-primary-500 active:bg-primary-700
+           focus-visible:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface-800 text-surface-100
+           hover:bg-surface-700 active:bg-surface-900
+           border border-surface-700
+           shadow-lg shadow-black/20 hover:shadow-black/30
+           focus-visible:ring-surface-500;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent-500 text-white
+           shadow-lg shadow-accent-500/20 hover:shadow-accent-500/30
+           hover:bg-accent-400 active:bg-accent-600
+           focus-visible:ring-accent-500;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-surface-300
+           hover:bg-surface-800 hover:text-surface-100;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white
+           shadow-lg shadow-red-600/20 hover:shadow-red-600/30
+           hover:bg-red-500 active:bg-red-700
+           focus-visible:ring-red-500;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-surface-900/50 border border-surface-800 
+           rounded-xl p-6 shadow-lg
+           backdrop-blur-sm
+           transition-all duration-300;
+  }
+
+  .card:hover {
+    @apply transform scale-[1.02] border-surface-700;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full px-4 py-2.5 
+           bg-surface-800 border border-surface-700 
+           rounded-lg text-surface-100
+           placeholder:text-surface-500
+           transition-all duration-200
+           focus:bg-surface-900
+           focus:border-primary-500 focus:ring-1 focus:ring-primary-500;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1
+           rounded-full text-xs font-semibold uppercase tracking-wider;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-500/10 text-primary-400;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent-500/10 text-accent-400;
+  }
+
+  .badge-success {
+    @apply badge bg-green-500/10 text-green-400;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-500/10 text-yellow-400;
+  }
+
+  .badge-error {
+    @apply badge bg-red-500/10 text-red-400;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-400 to-accent-400 
+           bg-clip-text text-transparent;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .text-shadow-md {
+    text-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-surface-900/80 backdrop-blur-lg border border-surface-800/50;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply animate-pulse-soft bg-surface-800 rounded;
+  }
+}

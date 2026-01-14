@@ -1,0 +1,2 @@
+import{j as s}from"./query-Bv2YtT6Q.js";import"./vendor-DW262YiZ.js";function t(){return s.jsxs("div",{className:"space-y-6",children:[s.jsx("h1",{className:"text-3xl font-display font-bold text-surface-100",children:"Partidos"}),s.jsx("div",{className:"card",children:s.jsx("p",{className:"text-surface-400",children:"Página de partidos - Por implementar"})})]})}export{t as default};
+//# sourceMappingURL=MatchesPage-B7GboueC.js.map

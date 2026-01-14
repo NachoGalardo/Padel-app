@@ -198,8 +198,8 @@ export default function VerifyOtpPage() {
 // =============================================================================
 
 function maskEmail(email: string): string {
-  const [local, domain] = email.split('@');
-  if (local.length <= 3) return `${local[0]}***@${domain}`;
+  const [local = '', domain = ''] = email.split('@');
+  if (local.length <= 3) return `${local.slice(0, 1)}***@${domain}`;
   return `${local.slice(0, 2)}***${local.slice(-1)}@${domain}`;
 }
 

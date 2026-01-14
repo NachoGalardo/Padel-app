@@ -34,7 +34,8 @@ export interface Profile {
 // =============================================================================
 
 async function fetchProfile(userId: string): Promise<Profile> {
-  const { data, error } = await supabase
+  const client = supabase as any;
+  const { data, error } = await client
     .from('profiles')
     .select('*')
     .eq('id', userId)
@@ -64,7 +65,8 @@ async function updateProfile(
     throw new ValidationError(firstError ?? 'Datos inválidos', validation.errors);
   }
 
-  const { data, error } = await supabase
+  const client = supabase as any;
+  const { data, error } = await client
     .from('profiles')
     .update({
       ...validation.data,

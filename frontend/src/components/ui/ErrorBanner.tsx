@@ -18,13 +18,14 @@ interface ErrorBannerProps {
  * - Countdown para rate limit
  * - Request ID para soporte
  */
-export function ErrorBanner({ error, onRetry, onDismiss, className }: ErrorBannerProps) {
+export function ErrorBanner({ error, onRetry, onDismiss, className }: ErrorBannerProps): JSX.Element {
+  const err = error as any;
   const [countdown, setCountdown] = useState<number | null>(null);
 
   // Countdown para rate limit
   useEffect(() => {
-    if (error.code === 'RATE_LIMIT' && error.retryDelay) {
-      const seconds = Math.ceil(error.retryDelay / 1000);
+    if (err.code === 'RATE_LIMIT' && err.retryDelay) {
+      const seconds = Math.ceil(err.retryDelay / 1000);
       setCountdown(seconds);
 
       const interval = setInterval(() => {
@@ -39,35 +40,37 @@ export function ErrorBanner({ error, onRetry, onDismiss, className }: ErrorBanne
 
       return () => clearInterval(interval);
     }
-  }, [error.code, error.retryDelay]);
 
-  const getIcon = () => {
-    if (isNetworkError(error)) {
+    return undefined;
+  }, [err.code, err.retryDelay]);
+
+  const getIcon = (): JSX.Element => {
+    if (isNetworkError(err)) {
       return <WifiOffIcon className="w-5 h-5" />;
     }
-    if (isAuthError(error)) {
+    if (isAuthError(err)) {
       return <LockIcon className="w-5 h-5" />;
     }
-    if (error.code === 'RATE_LIMIT') {
+    if (err.code === 'RATE_LIMIT') {
       return <ClockIcon className="w-5 h-5" />;
     }
-    if (error.status >= 500) {
+    if (err.status >= 500) {
       return <ServerIcon className="w-5 h-5" />;
     }
     return <AlertIcon className="w-5 h-5" />;
   };
 
-  const getColorClasses = () => {
-    if (isNetworkError(error)) {
+  const getColorClasses = (): string => {
+    if (isNetworkError(err)) {
       return 'bg-yellow-500/10 border-yellow-500/50 text-yellow-200';
     }
-    if (error.status >= 500) {
+    if (err.status >= 500) {
       return 'bg-red-500/10 border-red-500/50 text-red-200';
     }
     return 'bg-red-500/10 border-red-500/50 text-red-200';
   };
 
-  const showRetry = error.retryable && onRetry && countdown === null;
+  const showRetry = err.retryable && onRetry && countdown === null;
 
   return (
     <div
@@ -84,8 +87,8 @@ export function ErrorBanner({ error, onRetry, onDismiss, className }: ErrorBanne
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold">{error.userTitle}</h3>
-          <p className="text-sm opacity-90 mt-1">{error.userMessage}</p>
+          <h3 className="font-semibold">{err.userTitle}</h3>
+          <p className="text-sm opacity-90 mt-1">{err.userMessage}</p>
 
           {/* Countdown */}
           {countdown !== null && (
@@ -95,21 +98,21 @@ export function ErrorBanner({ error, onRetry, onDismiss, className }: ErrorBanne
           )}
 
           {/* Request ID */}
-          {error.requestId && (
+          {err.requestId && (
             <p className="text-xs mt-2 opacity-50 font-mono">
-              ID: {error.requestId}
+              ID: {err.requestId}
             </p>
           )}
 
           {/* Actions */}
-          {(showRetry || error.suggestedAction) && (
+          {(showRetry || err.suggestedAction) && (
             <div className="flex items-center gap-3 mt-3">
               {showRetry && (
                 <button
                   onClick={onRetry}
                   className="text-sm font-medium underline underline-offset-2 hover:no-underline"
                 >
-                  {error.suggestedAction ?? 'Reintentar'}
+                  {err.suggestedAction ?? 'Reintentar'}
                 </button>
               )}
             </div>

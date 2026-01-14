@@ -10,6 +10,7 @@ import { RequireCompleteProfile } from '@/components/guards/RequireCompleteProfi
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const VerifyOtpPage = lazy(() => import('@/pages/auth/VerifyOtpPage'));
 const CompleteProfilePage = lazy(() => import('@/pages/auth/CompleteProfilePage'));
+const SelectTenantPage = lazy(() => import('@/pages/auth/SelectTenantPage'));
 const AuthCallbackPage = lazy(() => import('@/pages/auth/AuthCallbackPage'));
 
 // Lazy load pages - Profile
@@ -18,9 +19,11 @@ const EditProfilePage = lazy(() => import('@/pages/profile/EditProfilePage'));
 // Lazy load pages - App
 const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'));
 const TournamentsPage = lazy(() => import('@/pages/tournaments/TournamentsPage'));
+const CreateTournamentPage = lazy(() => import('@/pages/tournaments/CreateTournamentPage'));
 const TournamentDetailPage = lazy(() => import('@/pages/tournaments/TournamentDetailPage'));
 const MatchesPage = lazy(() => import('@/pages/matches/MatchesPage'));
 const RankingsPage = lazy(() => import('@/pages/rankings/RankingsPage'));
+const MembersPage = lazy(() => import('@/pages/members/MembersPage'));
 const SettingsPage = lazy(() => import('@/pages/settings/SettingsPage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
@@ -130,6 +133,14 @@ export function AppRoutes() {
             </AuthOnlyRoute>
           }
         />
+        <Route
+          path="/select-tenant"
+          element={
+            <AuthOnlyRoute>
+              <SelectTenantPage />
+            </AuthOnlyRoute>
+          }
+        />
 
         {/* ============================================
             PROTECTED ROUTES (auth + tenant required)
@@ -143,15 +154,23 @@ export function AppRoutes() {
           }
         >
           <Route index element={<Navigate to="/dashboard" replace />} />
-          
+
           {/* Dashboard */}
           <Route path="dashboard" element={<DashboardPage />} />
-          
+
           {/* Profile */}
           <Route path="profile" element={<EditProfilePage />} />
-          
+
           {/* Tournaments - requiere perfil completo para inscribirse */}
           <Route path="tournaments" element={<TournamentsPage />} />
+          <Route
+            path="tournaments/new"
+            element={
+              <AdminRoute>
+                <CreateTournamentPage />
+              </AdminRoute>
+            }
+          />
           <Route
             path="tournaments/:id"
             element={
@@ -160,7 +179,7 @@ export function AppRoutes() {
               </RequireCompleteProfile>
             }
           />
-          
+
           {/* Matches - requiere perfil completo para reportar */}
           <Route
             path="matches"
@@ -170,11 +189,19 @@ export function AppRoutes() {
               </RequireCompleteProfile>
             }
           />
-          
+
           {/* Rankings */}
           <Route path="rankings" element={<RankingsPage />} />
-          
+
           {/* Admin only */}
+          <Route
+            path="members"
+            element={
+              <AdminRoute>
+                <MembersPage />
+              </AdminRoute>
+            }
+          />
           <Route
             path="settings"
             element={

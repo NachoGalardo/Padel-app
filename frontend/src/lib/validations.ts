@@ -59,13 +59,13 @@ export const profileSchema = z.object({
     .min(2, 'El nombre debe tener al menos 2 caracteres')
     .max(100, 'El nombre no puede tener más de 100 caracteres')
     .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'El nombre solo puede contener letras'),
-  
+
   email: z
     .string()
     .email('Ingresá un email válido')
     .optional()
     .or(z.literal('')),
-  
+
   phone: z
     .string()
     .optional()
@@ -73,12 +73,12 @@ export const profileSchema = z.object({
     .refine((val) => !val || phoneRegex.test(val), {
       message: 'Ingresá un número de teléfono válido',
     }),
-  
+
   gender: z.enum(['male', 'female'], {
     required_error: 'Seleccioná tu género',
     invalid_type_error: 'Género inválido',
   }),
-  
+
   birth_date: z
     .string()
     .optional()
@@ -99,7 +99,7 @@ export const completeProfileSchema = z.object({
     .string()
     .min(2, 'El nombre debe tener al menos 2 caracteres')
     .max(100, 'El nombre no puede tener más de 100 caracteres'),
-  
+
   gender: z.enum(['male', 'female'], {
     required_error: 'Seleccioná tu género para poder inscribirte a torneos',
   }),
@@ -108,6 +108,51 @@ export const completeProfileSchema = z.object({
 /** Schema para editar perfil (todos opcionales excepto name) */
 export const editProfileSchema = profileSchema.partial().extend({
   name: profileSchema.shape.name,
+});
+
+// =============================================================================
+// TOURNAMENT SCHEMAS
+// =============================================================================
+
+export const tournamentSchema = z.object({
+  name: z
+    .string()
+    .min(3, 'El nombre debe tener al menos 3 caracteres')
+    .max(100, 'El nombre no puede tener más de 100 caracteres'),
+
+  start_date: z.string().refine((val) => {
+    const date = new Date(val);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date >= today;
+  }, 'La fecha de inicio no puede ser en el pasado'),
+
+  end_date: z.string().optional(),
+
+  gender: z.enum(['male', 'female', 'mixed'], {
+    required_error: 'Seleccioná el género del torneo',
+  }),
+
+  format: z.enum(['single_elimination', 'round_robin'], {
+    required_error: 'Seleccioná el formato',
+  }),
+
+  max_teams: z.coerce
+    .number()
+    .min(4, 'Mínimo 4 equipos')
+    .max(256, 'Máximo 256 equipos'),
+
+  entry_fee_cents: z.coerce
+    .number()
+    .min(0, 'El precio no puede ser negativo'),
+
+  currency: z.string().default('ARS'),
+}).refine((data) => {
+  if (!data.end_date) return true;
+  return new Date(data.end_date) >= new Date(data.start_date);
+}, {
+  message: 'La fecha de fin debe ser posterior a la de inicio',
+  path: ['end_date'],
 });
 
 // =============================================================================
@@ -120,6 +165,7 @@ export type OtpInput = z.infer<typeof otpSchema>;
 export type ProfileInput = z.infer<typeof profileSchema>;
 export type CompleteProfileInput = z.infer<typeof completeProfileSchema>;
 export type EditProfileInput = z.infer<typeof editProfileSchema>;
+export type TournamentInput = z.infer<typeof tournamentSchema>;
 
 // =============================================================================
 // VALIDATION HELPERS
@@ -137,11 +183,11 @@ export function validate<T>(
   data: unknown
 ): ValidationResult<T> {
   const result = schema.safeParse(data);
-  
+
   if (result.success) {
     return { success: true, data: result.data };
   }
-  
+
   const errors: Record<string, string> = {};
   for (const error of result.error.errors) {
     const path = error.path.join('.');
@@ -149,7 +195,7 @@ export function validate<T>(
       errors[path] = error.message;
     }
   }
-  
+
   return { success: false, errors };
 }
 

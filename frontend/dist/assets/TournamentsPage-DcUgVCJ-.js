@@ -1,0 +1,2 @@
+import{j as e}from"./query-Bv2YtT6Q.js";import"./vendor-DW262YiZ.js";function a(){return e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("h1",{className:"text-3xl font-display font-bold text-surface-100",children:"Torneos"}),e.jsx("button",{className:"btn-primary",children:"Nuevo Torneo"})]}),e.jsx("div",{className:"card",children:e.jsx("p",{className:"text-surface-400",children:"Página de torneos - Por implementar"})})]})}export{a as default};
+//# sourceMappingURL=TournamentsPage-DcUgVCJ-.js.map

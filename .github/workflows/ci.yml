@@ -10,28 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
       - name: Install deps
         run: npm install
+
       - name: Lint
         run: npm run lint --if-present
+
       - name: Typecheck
         run: npm run typecheck --if-present
+
       - name: Tests
         run: npm test --if-present -- --runInBand
-      - name: Supabase migrations (dry run)
-        if: ${{ secrets.SUPABASE_ACCESS_TOKEN != '' }}
-        run: echo "TODO: ejecutar supabase db push/migrate con access token"
-      - name: Edge Functions deploy (dry run)
-        if: ${{ secrets.SUPABASE_ACCESS_TOKEN != '' }}
-        run: echo "TODO: supabase functions deploy --dry-run"
 

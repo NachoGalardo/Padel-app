@@ -1,0 +1,2 @@
+import{j as e}from"./query-Bv2YtT6Q.js";import"./vendor-DW262YiZ.js";function t(){return e.jsxs("div",{className:"space-y-6",children:[e.jsx("h1",{className:"text-3xl font-display font-bold text-surface-100",children:"Configuración"}),e.jsx("div",{className:"card",children:e.jsx("p",{className:"text-surface-400",children:"Página de configuración - Por implementar"})})]})}export{t as default};
+//# sourceMappingURL=SettingsPage-Bf_1ICXS.js.map

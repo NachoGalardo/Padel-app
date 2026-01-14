@@ -77,7 +77,6 @@ export class AppError extends Error {
   }): AppError {
     const code = response.error?.code ?? 'UNKNOWN_ERROR';
     const message = response.error?.message ?? 'Ocurrió un error inesperado';
-    const status = response.status ?? 500;
 
     return errorFromCode(code, {
       technicalMessage: message,

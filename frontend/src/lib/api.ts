@@ -10,7 +10,7 @@
  * - Headers de tenant automáticos
  */
 
-import { supabase, getSession } from './supabase';
+import { getSession } from './supabase';
 import {
   AppError,
   NetworkError,
@@ -55,10 +55,6 @@ function calculateBackoff(attempt: number, baseDelay = 1000): number {
   const delay = baseDelay * Math.pow(2, attempt - 1);
   const jitter = Math.random() * 0.3 * delay;
   return Math.min(delay + jitter, 30000);
-}
-
-function isRetryableStatus(status: number): boolean {
-  return status === 408 || status === 429 || status >= 500;
 }
 
 // =============================================================================

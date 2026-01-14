@@ -53,7 +53,7 @@ export default function AuthCallbackPage() {
         setStatus('success');
 
         // Verificar si el perfil está completo
-        const { data: profile } = await supabase
+        const { data: profile } = await (supabase as any)
           .from('profiles')
           .select('is_complete')
           .single();

@@ -1,0 +1,2 @@
+import{j as e}from"./query-Bv2YtT6Q.js";import{h as a}from"./vendor-DW262YiZ.js";function l(){const{id:s}=a();return e.jsxs("div",{className:"space-y-6",children:[e.jsx("h1",{className:"text-3xl font-display font-bold text-surface-100",children:"Detalle del Torneo"}),e.jsxs("div",{className:"card",children:[e.jsxs("p",{className:"text-surface-400",children:["Torneo ID: ",s]}),e.jsx("p",{className:"text-surface-400 mt-2",children:"Por implementar"})]})]})}export{l as default};
+//# sourceMappingURL=TournamentDetailPage-xX4XiLUo.js.map

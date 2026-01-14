@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProfile } from '@/hooks/useProfile';
 import { validate, editProfileSchema, type EditProfileInput } from '@/lib/validations';
 import { Button, LinkButton } from '@/components/ui/Button';
-import { FormField, Input, Select, RadioGroup } from '@/components/ui/FormField';
+import { FormField, Input } from '@/components/ui/FormField';
 import { Spinner } from '@/components/ui/LoadingStates';
 import { useToast } from '@/stores/uiStore';
 

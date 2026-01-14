@@ -1,0 +1,2 @@
+import{j as s}from"./query-Bv2YtT6Q.js";import"./vendor-DW262YiZ.js";function n(){return s.jsxs("div",{className:"space-y-6",children:[s.jsx("h1",{className:"text-3xl font-display font-bold text-surface-100",children:"Rankings"}),s.jsx("div",{className:"card",children:s.jsx("p",{className:"text-surface-400",children:"Página de rankings - Por implementar"})})]})}export{n as default};
+//# sourceMappingURL=RankingsPage-FoV9InPV.js.map

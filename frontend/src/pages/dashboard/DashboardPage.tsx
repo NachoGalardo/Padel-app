@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { useTenantStore } from '@/stores/tenantStore';
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const { currentTenant, currentMembership } = useTenantStore();
 
   return (
@@ -19,27 +21,27 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Torneos Activos"
-          value="3"
-          change="+1 este mes"
-          trend="up"
+          value="0"
+          change="Sin actividad"
+          trend="neutral"
         />
         <StatCard
           title="Partidos Hoy"
-          value="8"
-          change="2 pendientes"
+          value="0"
+          change="Sin partidos"
           trend="neutral"
         />
         <StatCard
           title="Jugadores"
-          value="124"
-          change="+12 este mes"
-          trend="up"
+          value="-"
+          change="-"
+          trend="neutral"
         />
         <StatCard
           title="Tu Ranking"
-          value="#15"
-          change="↑3 posiciones"
-          trend="up"
+          value="-"
+          change="-"
+          trend="neutral"
         />
       </div>
 
@@ -50,13 +52,22 @@ export default function DashboardPage() {
             Acciones Rápidas
           </h2>
           <div className="flex flex-wrap gap-3">
-            <button className="btn-primary">
+            <button
+              className="btn-primary"
+              onClick={() => navigate('/tournaments/new')}
+            >
               Crear Torneo
             </button>
-            <button className="btn-secondary">
+            <button
+              className="btn-secondary"
+              onClick={() => navigate('/matches')}
+            >
               Programar Partido
             </button>
-            <button className="btn-secondary">
+            <button
+              className="btn-secondary"
+              onClick={() => navigate('/settings')}
+            >
               Invitar Jugador
             </button>
           </div>
@@ -68,26 +79,8 @@ export default function DashboardPage() {
         <h2 className="text-lg font-semibold text-surface-100 mb-4">
           Actividad Reciente
         </h2>
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="flex items-center gap-4 p-3 rounded-lg bg-surface-800/50"
-            >
-              <div className="w-10 h-10 rounded-full bg-primary-600/20 flex items-center justify-center">
-                <span className="text-primary-400">🏆</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-surface-200">
-                  Torneo de Verano - Cuartos de Final
-                </p>
-                <p className="text-xs text-surface-500">
-                  Hace {i} hora{i > 1 ? 's' : ''}
-                </p>
-              </div>
-              <span className="badge-success">Finalizado</span>
-            </div>
-          ))}
+        <div className="text-center py-8">
+          <p className="text-surface-500">No hay actividad reciente para mostrar</p>
         </div>
       </div>
     </div>
@@ -118,4 +111,3 @@ function StatCard({ title, value, change, trend }: StatCardProps) {
     </div>
   );
 }
-
